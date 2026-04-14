@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Random Book Generator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Georgia', serif; background-color: #fdf6ec; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+    header { background-color: #5c3317; color: #fdf6ec; text-align: center; padding: 30px 20px; }
+    header h1 { font-size: 2.2rem; margin-bottom: 8px; }
+    header p { font-size: 1rem; color: #ffe8cc; }
+    nav { background-color: #3e2008; display: flex; justify-content: center; gap: 20px; padding: 10px; flex-wrap: wrap; }
+    nav a { color: #fdf6ec; text-decoration: none; font-family: 'Arial', sans-serif; font-size: 0.9rem; padding: 6px 14px; border-radius: 4px; }
+    nav a:hover { background-color: #8b5e3c; }
+    main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 50px 20px; }
+    .filter-bar { display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
+    .filter-bar label { font-family: 'Arial', sans-serif; font-size: 0.95rem; align-self: center; color: #5c3317; font-weight: bold; }
+    .filter-bar select { padding: 8px 14px; border: 2px solid #c8803a; border-radius: 8px; font-family: 'Georgia', serif; font-size: 0.95rem; background: white; color: #333; cursor: pointer; }
+    .btn-generate { background-color: #c8803a; color: white; border: none; padding: 16px 40px; border-radius: 30px; font-size: 1.1rem; font-family: 'Georgia', serif; cursor: pointer; box-shadow: 0 4px 12px rgba(200,128,58,0.4); transition: background 0.2s, transform 0.1s; margin-bottom: 40px; }
+    .btn-generate:hover { background-color: #a0602a; transform: scale(1.03); }
+    .book-card { background: white; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); padding: 40px; max-width: 560px; width: 100%; text-align: center; display: none; animation: fadeIn 0.5s ease; }
+    .book-card.visible { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .book-emoji { font-size: 5rem; margin-bottom: 16px; }
+    .book-title { font-size: 1.7rem; color: #5c3317; margin-bottom: 6px; }
+    .book-author { font-size: 1rem; color: #888; font-style: italic; margin-bottom: 16px; }
+    .book-genre { display: inline-block; background-color: #5c3317; color: #fdf6ec; font-family: 'Arial', sans-serif; font-size: 0.8rem; padding: 4px 14px; border-radius: 20px; margin-bottom: 16px; }
+    .book-description { font-size: 1rem; line-height: 1.7; color: #555; margin-bottom: 20px; }
+    .book-rating { font-size: 1.4rem; margin-bottom: 20px; }
+    .book-pages { font-family: 'Arial', sans-serif; font-size: 0.85rem; color: #aaa; }
+    .save-btn { margin-top: 16px; background: none; border: 2px solid #c8803a; color: #c8803a; padding: 8px 24px; border-radius: 20px; font-family: 'Georgia', serif; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }
+    .save-btn:hover { background-color: #c8803a; color: white; }
+    .reading-list-section { margin-top: 50px; max-width: 560px; width: 100%; }
+    .reading-list-section h2 { font-size: 1.4rem; color: #5c3317; border-bottom: 2px solid #c8803a; padding-bottom: 8px; margin-bottom: 16px; }
+    #reading-list { list-style: none; padding: 0; }
+    #reading-list li { background: white; border-left: 4px solid #c8803a; padding: 12px 16px; margin-bottom: 10px; border-radius: 4px; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    #reading-list li button { background: none; border: none; color: #c0392b; cursor: pointer; font-size: 1rem; }
+    .empty-msg { color: #aaa; font-style: italic; font-size: 0.95rem; list-style: none; padding: 10px 0; }
+    footer { background-color: #5c3317; color: #fdf6ec; text-align: center; padding: 20px; font-family: 'Arial', sans-serif; font-size: 0.85rem; }
+    footer a { color: #ffe8cc; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Random Book Generator</h1>
+  <p>Not sure what to read next? Let us decide for you!</p>
+</header>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="scratch.html">Reading Page</a>
+</nav>
+<main>
+  <div class="filter-bar">
+    <label for="genre-select">Filter by Genre:</label>
+    <select id="genre-select">
+      <option value="all">All Genres</option>
+      <option value="Fiction">Fiction</option>
+      <option value="Fantasy">Fantasy</option>
+      <option value="Dystopian">Dystopian</option>
+      <option value="Mystery">Mystery</option>
+      <option value="Non-Fiction">Non-Fiction</option>
+      <option value="Romance">Romance</option>
+      <option value="Historical Fiction">Historical Fiction</option>
+    </select>
+  </div>
+  <button class="btn-generate" onclick="generateBook()">Generate a Book for Me!</button>
+  <div class="book-card" id="book-card">
+    <div class="book-emoji" id="book-emoji">&#128218;</div>
+    <div class="book-genre" id="book-genre">Genre</div>
+    <h2 class="book-title" id="book-title">Book Title</h2>
+    <p class="book-author" id="book-author">by Author Name</p>
+    <p class="book-description" id="book-description">Description goes here.</p>
+    <div class="book-rating" id="book-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</div>
+    <div class="book-pages" id="book-pages">000 pages</div>
+    <br/>
+    <button class="save-btn" onclick="saveBook()">+ Add to My Reading List</button>
+  </div>
+  <div class="reading-list-section">
+    <h2>My Reading List</h2>
+    <ul id="reading-list">
+      <li class="empty-msg" id="empty-msg">Your reading list is empty. Start generating books!</li>
+    </ul>
+  </div>
+</main>
+<footer>
+  <p>Made with love by Lizzy Jackson | <a href="scratch.html">Back to Reading Page</a></p>
+</footer>
+<script>
+  const books = [
+    { title: "Little One", author: "Unknown", genre: "Fiction", emoji: "&#127800;", pages: 180, rating: 5, description: "A beautifully touching story about the precious moments of childhood and the love between a parent and child." },
+    { title: "The Hunger Games", author: "Suzanne Collins", genre: "Dystopian", emoji: "&#127993;", pages: 374, rating: 5, description: "In a dystopian future, Katniss volunteers to take her sister's place in a televised death match. A gripping story of survival and courage." },
+    { title: "The Red Code", author: "Unknown", genre: "Mystery", emoji: "&#128308;", pages: 320, rating: 4, description: "A suspenseful thriller that keeps you guessing until the very last page. Secrets, identity, and truth collide." },
+    { title: "Harry Potter and the Sorcerer's Stone", author: "J.K. Rowling", genre: "Fantasy", emoji: "&#9889;", pages: 309, rating: 5, description: "An orphaned boy discovers he is a wizard and begins his education at Hogwarts School of Witchcraft and Wizardry." },
+    { title: "Pride and Prejudice", author: "Jane Austen", genre: "Romance", emoji: "&#128140;", pages: 432, rating: 5, description: "A timeless love story following the spirited Elizabeth Bennet as she navigates social class and an unlikely romance." },
+    { title: "The Great Gatsby", author: "F. Scott Fitzgerald", genre: "Historical Fiction", emoji: "&#127870;", pages: 180, rating: 4, description: "Set in the Jazz Age, this novel explores themes of wealth, love, and the American Dream." },
+    { title: "To Kill a Mockingbird", author: "Harper Lee", genre: "Historical Fiction", emoji: "&#128038;", pages: 281, rating: 5, description: "A powerful story of racial injustice and moral growth in the American South, told through young Scout Finch." },
+    { title: "Atomic Habits", author: "James Clear", genre: "Non-Fiction", emoji: "&#9883;", pages: 319, rating: 5, description: "A practical guide to building good habits through small, incremental changes. Life-changing for anyone wanting to improve." },
+    { title: "The Alchemist", author: "Paulo Coelho", genre: "Fiction", emoji: "&#127775;", pages: 163, rating: 5, description: "A philosophical novel about a shepherd's journey to find his Personal Legend." },
+    { title: "Ender's Game", author: "Orson Scott Card", genre: "Fiction", emoji: "&#128640;", pages: 352, rating: 5, description: "A brilliant young boy is trained to become the commander who will save humanity from an alien threat." },
+    { title: "Mistborn: The Final Empire", author: "Brandon Sanderson", genre: "Fantasy", emoji: "&#127783;", pages: 541, rating: 5, description: "A crew of thieves plots to overthrow a seemingly immortal ruler using rare magical powers." },
+    { title: "Gone Girl", author: "Gillian Flynn", genre: "Mystery", emoji: "&#128269;", pages: 422, rating: 4, description: "On their anniversary, Nick Dunne's wife disappears. A twisted tale of marriage, deception, and media obsession." },
+    { title: "Educated", author: "Tara Westover", genre: "Non-Fiction", emoji: "&#127891;", pages: 352, rating: 5, description: "A memoir about a woman who grew up in a survivalist family and eventually earned a PhD from Cambridge." },
+    { title: "The Giver", author: "Lois Lowry", genre: "Dystopian", emoji: "&#127752;", pages: 179, rating: 5, description: "In a seemingly perfect society with no pain or conflict, a young boy discovers the dark truth hidden below." },
+    { title: "Divergent", author: "Veronica Roth", genre: "Dystopian", emoji: "&#128256;", pages: 487, rating: 4, description: "In futuristic Chicago, Tris discovers she doesn't fit neatly into any one social faction." }
+  ];
+
+  let currentBook = null;
+
+  function generateBook() {
+    const selectedGenre = document.getElementById('genre-select').value;
+    const filtered = selectedGenre === 'all' ? books : books.filter(b => b.genre === selectedGenre);
+    if (filtered.length === 0) { alert("No books found for that genre. Try another!"); return; }
+    let available = filtered.filter(b => !currentBook || b.title !== currentBook.title);
+    if (available.length === 0) available = filtered;
+    const book = available[Math.floor(Math.random() * available.length)];
+    currentBook = book;
+    document.getElementById('book-emoji').innerHTML = book.emoji;
+    document.getElementById('book-title').textContent = book.title;
+    document.getElementById('book-author').textContent = 'by ' + book.author;
+    document.getElementById('book-genre').textContent = book.genre;
+    document.getElementById('book-description').textContent = book.description;
+    document.getElementById('book-pages').textContent = book.pages + ' pages';
+    document.getElementById('book-rating').textContent = '&#11088;'.repeat(book.rating);
+    const card = document.getElementById('book-card');
+    card.classList.remove('visible');
+    void card.offsetWidth;
+    card.classList.add('visible');
+  }
+
+  function saveBook() {
+    if (!currentBook) return;
+    const list = document.getElementById('reading-list');
+    const items = list.querySelectorAll('li:not(.empty-msg)');
+    for (let item of items) {
+      if (item.dataset.title === currentBook.title) { alert("Already in your reading list!"); return; }
+    }
+    const emptyMsg = document.getElementById('empty-msg');
+    if (emptyMsg) emptyMsg.remove();
+    const li = document.createElement('li');
+    li.dataset.title = currentBook.title;
+    li.innerHTML = '<span><strong>' + currentBook.title + '</strong> - ' + currentBook.author + '</span><button onclick="removeBook(this)">x</button>';
+    list.appendChild(li);
+  }
+
+  function removeBook(btn) {
+    const li = btn.parentElement;
+    li.remove();
+    const list = document.getElementById('reading-list');
+    if (list.children.length === 0) {
+      const empty = document.createElement('li');
+      empty.className = 'empty-msg';
+      empty.id = 'empty-msg';
+      empty.textContent = 'Your reading list is empty. Start generating books!';
+      list.appendChild(empty);
+    }
+  }
+</script>
+</body>
+</html>
