@@ -27,8 +27,6 @@
     .book-author { font-size: 1rem; color: #888; font-style: italic; margin-bottom: 16px; }
     .book-genre { display: inline-block; background-color: #5c3317; color: #fdf6ec; font-family: 'Arial', sans-serif; font-size: 0.8rem; padding: 4px 14px; border-radius: 20px; margin-bottom: 16px; }
     .book-description { font-size: 1rem; line-height: 1.7; color: #555; margin-bottom: 20px; }
-    .book-rating { font-size: 1.4rem; margin-bottom: 20px; }
-    .book-pages { font-family: 'Arial', sans-serif; font-size: 0.85rem; color: #aaa; }
     .save-btn { margin-top: 16px; background: none; border: 2px solid #c8803a; color: #c8803a; padding: 8px 24px; border-radius: 20px; font-family: 'Georgia', serif; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }
     .save-btn:hover { background-color: #c8803a; color: white; }
     .reading-list-section { margin-top: 50px; max-width: 560px; width: 100%; }
@@ -71,8 +69,6 @@
     <h2 class="book-title" id="book-title">Book Title</h2>
     <p class="book-author" id="book-author">by Author Name</p>
     <p class="book-description" id="book-description">Description goes here.</p>
-    <div class="book-rating" id="book-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</div>
-    <div class="book-pages" id="book-pages">000 pages</div>
     <br/>
     <button class="save-btn" onclick="saveBook()">+ Add to My Reading List</button>
   </div>
@@ -119,10 +115,7 @@
     document.getElementById('book-title').textContent = book.title;
     document.getElementById('book-author').textContent = 'by ' + book.author;
     document.getElementById('book-genre').textContent = book.genre;
-    document.getElementById('book-description').textContent = book.description;
-    document.getElementById('book-pages').textContent = book.pages + ' pages';
-    document.getElementById('book-rating').textContent = '&#11088;'.repeat(book.rating);
-    const card = document.getElementById('book-card');
+    document.getElementById('book-description').textContent = book.description;    const card = document.getElementById('book-card');
     card.classList.remove('visible');
     void card.offsetWidth;
     card.classList.add('visible');
