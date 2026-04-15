@@ -25,10 +25,9 @@
 
   <div id="why-read" class="content-section">
     <h2>Why Reading Matters</h2>
-    <p>Reading has always been more than a hobby for me. Whether I am on a mission in New Caledonia or studying finance at BYU, books are always by my side. Watch this video to see why reading is one of the most important habits you can build:</p>
+    <p>Reading has always been more than a hobby for me. Ever since I was a child I have loved escaping the world and reading. Watch this video to see why reading is one of the most important habits you can build:</p>
     <div class="video-wrapper">
-      <iframe
-        width="560" height="315"
+      <iframe width="560" height="315"
         src="https://www.youtube.com/embed/01iWvqSl4Ks"
         title="Why Reading is Important"
         frameborder="0"
@@ -41,43 +40,25 @@
   <div id="favorites" class="content-section light-bg">
     <h2>My Favorite Books</h2>
     <p>Here are some of the books that have meant the most to me, organized by the way they have impacted my life:</p>
-
     <ol class="book-list">
       <li>
-        <strong>Little One</strong>
-        <p>A beautifully touching story that reminds you of the simple, precious moments in life.</p>
-        <ul>
-          <li>Themes: love, family, childhood</li>
-          <li>Best for: a quiet Sunday afternoon read</li>
-          <li>My rating: 5 out of 5 stars</li>
-        </ul>
+        <strong>Little One (A Novel)</strong><br/>
+        <em>By Olivia Muenter</em>
+        <p>A young couple's life is disrupted when they take in a mysterious and unsettling girl connected to the husband's past. As strange and increasingly disturbing events unfold, the wife begins to question the child's true nature and her husband's secrets, leading to a tense psychological unraveling.</p>
       </li>
       <li>
-        <strong>The Hunger Games</strong> by Suzanne Collins
-        <p>A gripping dystopian trilogy about survival, courage, and standing up for what is right.</p>
-        <ul>
-          <li>Themes: courage, sacrifice, justice</li>
-          <li>Best for: when you need a page-turner you cannot put down</li>
-          <li>My rating: 5 out of 5 stars</li>
-        </ul>
+        <strong>The Rose Code</strong><br/>
+        <em>By Kate Quinn</em>
+        <p>Set during World War II, three female codebreakers work at Bletchley Park, deciphering enemy messages. Bound by secrecy and friendship, their relationships are tested by betrayal, love, and the pressures of war. Years later, a shocking revelation forces them to confront the past and uncover the truth behind a long-hidden betrayal.</p>
       </li>
       <li>
-        <strong>The Red Code</strong>
-        <p>A thrilling and thought-provoking read that keeps you guessing until the very last page.</p>
-        <ul>
-          <li>Themes: mystery, identity, truth</li>
-          <li>Best for: a suspenseful weekend read</li>
-          <li>My rating: 4 out of 5 stars</li>
-        </ul>
+        <strong>The Hunger Games</strong><br/>
+        <em>By Suzanne Collins</em>
+        <p>In a dystopian future, Katniss Everdeen volunteers to take her sister's place in a deadly televised competition where only one tribute can survive. As she navigates alliances, survival, and manipulation by the Capitol, Katniss becomes an unexpected symbol of resistance against a cruel and controlling government.</p>
       </li>
     </ol>
-
     <div class="book-image-wrapper">
-      <img
-        src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=700&q=80"
-        alt="Stack of favorite books"
-        class="book-image"
-      />
+      <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=700&q=80" alt="A Stack of Books" class="book-image" />
       <p class="img-caption">There is nothing like a great stack of books waiting to be read.</p>
     </div>
   </div>
@@ -97,9 +78,13 @@
     <h2>World Reading Stats - Interactive Chart</h2>
     <p>Explore this interactive Tableau visualization about global reading habits and literacy rates:</p>
     <div class="tableau-wrapper">
-      <div class='tableauPlaceholder' style='position:relative; width:100%; max-width:800px; margin:auto;'>
-        <noscript><a href='#'><img alt='Sheet 1' src='https://public.tableau.com/static/images/Bo/BookSales_16161519791350/Sheet1/1_rss.png' style='border:none'/></a></noscript>
-        <object class='tableauViz' style='width:100%;height:500px;'>
+      <div class='tableauPlaceholder' id='viz1' style='position:relative; width:100%; max-width:800px; margin:auto;'>
+        <noscript>
+          <a href='#'>
+            <img alt='Sheet 1' src='https://public.tableau.com/static/images/Bo/BookSales_16161519791350/Sheet1/1_rss.png' style='border:none'/>
+          </a>
+        </noscript>
+        <object class='tableauViz' style='display:none;'>
           <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F'/>
           <param name='embed_code_version' value='3'/>
           <param name='site_root' value=''/>
@@ -111,9 +96,19 @@
           <param name='display_spinner' value='yes'/>
           <param name='display_overlay' value='yes'/>
           <param name='display_count' value='yes'/>
+          <param name='language' value='en-US'/>
         </object>
       </div>
       <script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script>
+      <script type='text/javascript'>
+        var divElement = document.getElementById('viz1');
+        var vizElement = divElement.getElementsByTagName('object')[0];
+        vizElement.style.width = '100%';
+        vizElement.style.height = '500px';
+        var scriptElement = document.createElement('script');
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);
+      </script>
     </div>
   </div>
 
